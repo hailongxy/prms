@@ -1,0 +1,105 @@
+linux系统启动jar包请注意将附件的黑体字simhei.tff 导入系统
+
+
+
+
+
+附
+
+
+
+---------------------------
+Linux: 字体安装  
+
+    
+
+
+       今天接触了 Linux 下字体安装方面的内容，本实验以安装宋体( simsun.ttf ) 为例，
+记录下安装过程。
+
+--1 下载字体
+      可以在网上下载，也可以在 windows 目录下找到对应字体，这里是从另一套系统上 copy  
+  simsun.ttf 文件。
+
+--2 查看当前系统中已安装的中文字体
+ [root@redhat6 ~]# fc-list :lang=zh
+AR PL UMing TW:style=Light
+AR PL UMing HK:style=Light
+AR PL UMing CN:style=Light
+AR PL UKai TW MBE:style=Book
+AR PL UKai CN:style=Book
+AR PL UKai HK:style=Book
+AR PL UKai TW:style=Book
+WenQuanYi Zen Hei,文泉驛正黑,文泉驿正黑:style=Regular
+WenQuanYi Zen Hei Mono,文泉驛等寬正黑,文泉驿等宽正黑:style=Regular
+AR PL UMing TW MBE:style=Light
+WenQuanYi Zen Hei Sharp,文泉驛點陣正黑,文泉驿点阵正黑:style=Regular
+ 备注：这个命令显示已安装的中文字体，从输出来看，宋体没有安装。
+ 
+--3 复制  simsun.ttf 字体文件
+ [root@redhat6 my_fonts]# mkdir -p /usr/share/fonts/my_fonts
+   
+  并从另一台已安装 simsun.ttf 字体的系统复制这个文件到这个目录。
+  
+--4 生成字体索引信息
+ [root@redhat6 fonts]# cd my_fonts/
+[root@redhat6 my_fonts]# mkfontscale 
+[root@redhat6 my_fonts]# mkfontsdir
+
+[root@redhat6 my_fonts]# ll
+total 10276
+-rw-r--r--. 1 root root      189 Jan 31 22:33 fonts.dir
+-rw-r--r--. 1 root root      189 Jan 31 22:33 fonts.scale
+-rw-r--r--. 1 root root 10512288 Jan 31 22:33 simsun.ttf
+    备注：生成相应的 fonts.scale 和 fonts.dir 文件。
+
+--5 再次查看已安装的字体
+ [root@redhat6 my_fonts]# fc-list :lang=zh
+AR PL UMing TW:style=Light
+AR PL UMing HK:style=Light
+NSimSun,新宋体:style=Regular
+AR PL UMing CN:style=Light
+SimSun,宋体:style=Regular
+AR PL UKai TW MBE:style=Book
+AR PL UKai CN:style=Book
+AR PL UKai HK:style=Book
+AR PL UKai TW:style=Book
+WenQuanYi Zen Hei,文泉驛正黑,文泉驿正黑:style=Regular
+WenQuanYi Zen Hei Mono,文泉驛等寬正黑,文泉驿等宽正黑:style=Regular
+AR PL UMing TW MBE:style=Light
+WenQuanYi Zen Hei Sharp,文泉驛點陣正黑,文泉驿点阵正黑:style=Regular
+    备注：此时宋体字体已安装完成，也可以在图形化界面 "System --> Preferences --> Appearance -->
+                 fonts "  面板查看已安装的字体。
+
+
+---------------
+
+
+
+在linux中添加windows字体
+
+
+
+
+第一步：将windows下喜欢的字体文件copy到一个文件夹中，例如将XP里WINDOWS/FONTS中的字体文件，然后上传到linux服务器上，在linux中命名为xpfonts。
+
+
+第二步：将copy到的字体文件夹copy到系统字体文件夹中并且修改权限
+
+
+sudo cp {存放xpfonts的路径}/xpfonts   /usr/share/fonts/
+
+sudo chmod u+rwx /usr/share/fonts/xpfonts/*
+
+第三步：建立字体缓存
+
+
+cd /usr/share/fonts/xpfonts
+
+sudo mkfontscale
+
+sudo mkfontdir
+
+sudo fc-cache -fv
+
+这样就OK了，系统里面已经有了你想要的字体，这样用openoffice的时候再也不会遇到字体太少的尴尬了……如果看不到的话，sudo shutdown -r now试一下。

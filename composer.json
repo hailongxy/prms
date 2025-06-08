@@ -1,0 +1,20 @@
+{
+  "name": "vendor_name/prms",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "issuser",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "ifsnop/mysqldump-php": "^2.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}

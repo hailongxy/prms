@@ -1,0 +1,19 @@
+windows指引
+
+	1.将pic文件夹,jar包,RUN-SF-PRINTER.bat放于同一文件
+	2.双击RUN-SF-PRINTER.bat
+	3.若使用页面打印面单，请按照相应地址访问http://localhost:4040/getWaybills.html
+	4.选择相应url，打印图片
+
+
+
+linux指引
+
+	1.将pic文件夹,jar包,RUN-SF-PRINTER.bat放于同一文件
+	2.使用命令启动
+	命令为
+	###默认4040端口启动
+	java -Dfile.encoding=utf-8  -jar csim_waybill_print_service_V1.1.*.jar
+
+	###其他端口启动 port=端口号 如9180
+	java -Dfile.encoding=utf-8  -jar csim_waybill_print_service_V1.1.*.jar  port

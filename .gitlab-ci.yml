@@ -1,0 +1,14 @@
+before_script:
+  - ls
+
+run-test:
+  script:
+    - df -h
+
+deploy_staging:
+  stage: deploy
+  script:
+    - echo "Deploy to staging server"
+  environment:
+    name: test env
+    url: http://prms.hailongxy.cn/

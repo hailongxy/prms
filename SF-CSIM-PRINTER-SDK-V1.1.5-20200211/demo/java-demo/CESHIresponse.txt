@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<Response service="OrderService">
+    <Head>OK</Head>
+    <Body>
+        <OrderResponse filter_result="2" destcode="755" mailno="SF1000114645237" remark="4:这是一条温馨提示。" return_tracking_no="SF1060000230275" origincode="755" orderid="SF40100922921">
+            <rls_info rls_errormsg="SF1000114645237:" invoke_result="OK" rls_code="1000">
+                <rls_detail waybillNo="SF1000114645237" sourceCityCode="755" sourceDeptCode="755Q" sourceTeamCode="005" destCityCode="755" destDeptCode="755AP" destDeptCodeMapping="755W" destRouteLabel="755W-755AP" proName="顺丰标快" cargoTypeCode="C201" limitTypeCode="T4" expressTypeCode="B1" codingMapping="C5" codingMappingOut="A01" xbFlag="xb" abFlag="A" printFlag="000000111" twoDimensionCode="MMM={'k1':'','k2':'755AP','k3':'','k4':'T4','k5':'SF1000114645237','k6':'','k7':'7517f1b4'}" proCode="T4" printIcon="00000000"/>
+            </rls_info>
+            <rls_info rls_errormsg="SF1060000230275:" invoke_result="OK" rls_code="1000">
+                <rls_detail waybillNo="SF1060000230275" sourceCityCode="755" destCityCode="755" destDeptCode="755Q" destDeptCodeMapping="755WF" destTeamCode="005" destRouteLabel="755WF-755Q" proName="顺丰标快" cargoTypeCode="C201" limitTypeCode="T4" expressTypeCode="B1" codingMapping="F4" codingMappingOut="A01" xbFlag="xb" printFlag="000000000" twoDimensionCode="MMM={'k1':'','k2':'755Q','k3':'005','k4':'T4','k5':'SF1060000230275','k6':'','k7':'a59fae71'}"
+ proCode="T4" printIcon="00000000"/>
+            </rls_info>
+        </OrderResponse>
+    </Body>
+</Response>
