@@ -187,7 +187,8 @@ setCookie('zhujiwusysdomain','ftp341091.host510.zhujiwu.me',null);
                 if($_SESSION['usertype'] == '管理员'){
 				?>
                 <a href="senior_topic_manage.php?menu_type=senior_topic&topicid=0" style="line-height:42px; color:#FFF; cursor:pointer">高级专题</a>
-<!--                <a href="status_map_manage.php?menu_type=map" style="line-height:42px; color:#FFF; cursor:pointer">图表中心</a>-->
+                <a href="/react/list/knowledge-category-list" style="line-height:42px; color:#FFF; cursor:pointer">知识管理</a>
+                    <!--                <a href="status_map_manage.php?menu_type=map" style="line-height:42px; color:#FFF; cursor:pointer">图表中心</a>-->
 <!--                <a href="map_topic_manage.php?menu_type=flow&topicid=0" style="line-height:42px; color:#FFF; cursor:pointer">流程图</a>-->
                 <?php
 				}
