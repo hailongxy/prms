@@ -1,3 +1,3 @@
-PRMS
+PRMS(Personal Resource Manage System)
 
-A system to manage your message.
+A system to manage your resource.
