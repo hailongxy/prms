@@ -12,7 +12,7 @@ func InitRouter() *gin.Engine {
 
 	// 添加跨域配置
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:8000", "http://prms.hailongxy.cn"},
+		AllowOrigins:     []string{"http://localhost:8000", "http://prms.hailongxy.cn", "http://127.0.0.1:30080"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -32,6 +32,8 @@ func InitRouter() *gin.Engine {
 		v1.DELETE("/knowledge/:id", api.DeleteKnowledge)
 		v1.GET("/knowledge/:id", api.GetKnowledge)
 		v1.POST("/knowledge/sort", api.SortKnowledge)
+		v1.GET("/currentUser", api.GetCurrentUser)
+		v1.GET("/fake_analysis_chart_data", api.GetFakeAnalysisChartData)
 	}
 
 	return router

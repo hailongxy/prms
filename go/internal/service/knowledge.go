@@ -3,6 +3,7 @@ package service
 import (
 	"prms/internal/model"
 	"prms/internal/repository"
+	"time"
 )
 
 type KnowledgeService struct {
@@ -42,6 +43,8 @@ type Knowledge struct {
 	Title         string       `json:"title"`
 	KnowledgeType string       `json:"knowledge_type"`
 	ParentID      *int64       `json:"parent_id"`
+	CreatedAt     *time.Time   `json:"created_at"`
+	UpdatedAt     *time.Time   `json:"updated_at"`
 	Children      []*Knowledge `json:"children" gorm:"-"`
 }
 
@@ -64,6 +67,8 @@ func (k *KnowledgeService) buildTree(knowledgeList []model.Knowledge) []*Knowled
 			Title:         knowledge.Title,
 			KnowledgeType: knowledge.KnowledgeType,
 			ParentID:      &knowledge.ParentID,
+			CreatedAt:     knowledge.CreatedAt,
+			UpdatedAt:     knowledge.UpdatedAt,
 		})
 	}
 
