@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prms-go
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prms-go
+  template:
+    metadata:
+      labels:
+        app: prms-go
+    spec:
+      containers:
+        - name: prms-go
+          image: prms-go:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+          volumeMounts:
+            - name: config-volume
+              mountPath: /go/src/prms/configs/cfg.toml
+              subPath: cfg.toml
+      volumes:
+        - name: config-volume
+          configMap:
+            name: prms-go-config
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prms-go-service
+spec:
+  type: ClusterIP
+  selector:
+    app: prms-go
+  ports:
+    - port: 8081
+      targetPort: 8081
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prms-go-config
+data:
+  cfg.toml: |
+    [mysql]
+    host = "mysql"
+    port = "3306"
+    user = "root"
+    password = "ServBay.dev"
+    dbname = "prms"
