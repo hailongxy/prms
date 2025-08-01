@@ -26,3 +26,6 @@ Doc page:
 
 Table page:
 ![](./table.png)
+
+Mind map page:
+![](./mind_map.png)
