@@ -6,6 +6,7 @@ import UniverPresetSheetsCoreEnUS from '@univerjs/presets/preset-sheets-core/loc
 import '@univerjs/presets/lib/styles/preset-sheets-core.css';
 import { Button, Card, message } from 'antd';
 import { history, request, useParams } from '@umijs/max';
+import { LeftOutlined } from '@ant-design/icons';
 
 interface KnowledgeDetail {
   id: number;
@@ -32,7 +33,7 @@ export default function UniverSheet() {
     }
 
     setLoading(true);
-    request(`http://127.0.0.1:8081/api/v1/knowledge/${id}`, {
+    request(`/api/v1/knowledge/${id}`, {
       method: 'GET',
     })
       .then((res) => {
@@ -84,7 +85,7 @@ export default function UniverSheet() {
   const handleSave = async () => {
     if (!detail) return;
     try {
-      const res = await request(`http://127.0.0.1:8081/api/v1/knowledge/${detail.id}`, {
+      const res = await request(`/api/v1/knowledge/${detail.id}`, {
         method: 'PUT',
         data: {
           ...detail,
@@ -119,13 +120,14 @@ export default function UniverSheet() {
 
   return (
     <Card
-      title={detail?.title || '表格'}
-      extra={
-        <Button
-          onClick={() => history.back()}
-        >
-          返回
-        </Button>
+      title={
+        <span>
+          <LeftOutlined
+            onClick={() => history.back()}
+            style={{ marginRight: 8, cursor: 'pointer' }}
+          />
+          {detail ? detail.title : '加载中...'}
+        </span>
       }
       style={{ width: '100%', margin: '20px auto' }}
     >

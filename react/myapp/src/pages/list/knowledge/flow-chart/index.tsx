@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, history } from '@umijs/max';
 import { Card, Spin, Button, message } from 'antd';
+import { LeftOutlined } from '@ant-design/icons';
 import { request } from '@umijs/max';
 
 interface KnowledgeDetail {
@@ -40,7 +41,7 @@ const Knowledge: React.FC = () => {
     }
 
     setLoading(true);
-    request(`http://127.0.0.1:8081/api/v1/knowledge/${id}`, {
+    request(`/api/v1/knowledge/${id}`, {
       method: 'GET',
     })
       .then((res) => {
@@ -62,7 +63,7 @@ const Knowledge: React.FC = () => {
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       // 只处理来自 draw.io 的消息
-      if (!event.origin.includes('localhost') && !event.origin.includes('prms.hailongxy.cn')) return;
+      if (!event.origin.includes('localhost') && !event.origin.includes('prms.hailongxy.cn') && !event.origin.includes('127.0.0.1')) return;
 
       const msg = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
       if (msg.event === 'init') {
@@ -108,7 +109,7 @@ const Knowledge: React.FC = () => {
         if (messageData.data) {
           setContent(messageData.data);
           if (detail) {
-            request(`http://127.0.0.1:8081/api/v1/knowledge/${detail.id}`, {
+            request(`/api/v1/knowledge/${detail.id}`, {
               method: 'PUT',
               data: {
                 ...detail,
@@ -165,13 +166,14 @@ const Knowledge: React.FC = () => {
 
   return (
     <Card
-      title={detail.title}
-      extra={
-        <Button
-          onClick={() => history.back()}
-        >
-          返回
-        </Button>
+      title={
+        <span>
+          <LeftOutlined
+            onClick={() => history.back()}
+            style={{ marginRight: 8, cursor: 'pointer' }}
+          />
+          {detail.title}
+        </span>
       }
       style={{ width: '100%', margin: '20px auto' }}
     >

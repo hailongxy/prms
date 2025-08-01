@@ -4,6 +4,7 @@ import NodeMenu from "@mind-elixir/node-menu";
 import "@mind-elixir/node-menu/dist/style.css";
 import { Button, Card, message } from 'antd';
 import { history, request, useParams } from '@umijs/max';
+import { LeftOutlined } from '@ant-design/icons';
 
 interface KnowledgeDetail {
   id: number;
@@ -23,7 +24,7 @@ const Knowledge = () => {
   const handleSave = useCallback(async () => {
     if (!detail) return;
     try {
-      const res = await request(`http://127.0.0.1:8081/api/v1/knowledge/${detail.id}`, {
+      const res = await request(`/api/v1/knowledge/${detail.id}`, {
         method: 'PUT',
         data: {
           ...detail,
@@ -48,7 +49,7 @@ const Knowledge = () => {
     }
 
     setLoading(true);
-    request(`http://127.0.0.1:8081/api/v1/knowledge/${id}`, {
+    request(`/api/v1/knowledge/${id}`, {
       method: 'GET',
     })
       .then((res) => {
@@ -107,13 +108,14 @@ const Knowledge = () => {
 
   return (
     <Card
-      title={detail?.title || '思维导图'}
-      extra={
-        <Button
-          onClick={() => history.back()}
-        >
-          返回
-        </Button>
+      title={
+        <span>
+          <LeftOutlined
+            onClick={() => history.back()}
+            style={{ marginRight: 8, cursor: 'pointer' }}
+          />
+          {detail.title}
+        </span>
       }
       style={{ width: '100%', margin: '20px auto' }}
     >

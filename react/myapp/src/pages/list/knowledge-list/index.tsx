@@ -8,6 +8,7 @@ import {
   TableOutlined,
   ApartmentOutlined,
   FolderOutlined,
+  LeftOutlined,
 } from '@ant-design/icons';
 import type { TreeDataNode, TreeProps } from 'antd';
 import {
@@ -24,6 +25,7 @@ import { addKnowledge, removeKnowledge } from '@/pages/list/knowledge-list/servi
 import UpdateForm, { type FormValueType } from '@/pages/list/knowledge-list/components/UpdateForm';
 import { updateKnowledge } from '@/pages/list/knowledge-list/service';
 import { FcMindMap } from "react-icons/fc";
+import dayjs from 'dayjs';
 
 const handleAdd = async (fields: TableListItem) => {
   const hide = message.loading('正在添加');
@@ -103,47 +105,78 @@ const Knowledge: React.FC = () => {
                 if (node.knowledge_type === 'table_of_contents') return;
                 let path = `/react/knowledge/text/${node.id}`; // 默认
                 if (node.knowledge_type === 'form') path = `/react/knowledge/form/${node.id}`;
-                else if (node.knowledge_type === 'brain_mapping') path = `/react/knowledge/brain-mapping/${node.id}`;
-                else if (node.knowledge_type === 'flow_chart') path = `/react/knowledge/flow-chart/${node.id}`;
+                else if (node.knowledge_type === 'brain_mapping')
+                  path = `/react/knowledge/brain-mapping/${node.id}`;
+                else if (node.knowledge_type === 'flow_chart')
+                  path = `/react/knowledge/flow-chart/${node.id}`;
                 window.open(path, '_self');
               }}
               style={{ color: '#1677ff', cursor: 'pointer' }}
             >
               <>
                 {/* eslint-disable-next-line react/jsx-no-undef */}
-                {node.knowledge_type === 'form' && <i><TableOutlined style={{ marginRight: 4 }} /></i>}
+                {node.knowledge_type === 'form' && (
+                  <i>
+                    <TableOutlined style={{ marginRight: 4 }} />
+                  </i>
+                )}
                 {/* eslint-disable-next-line react/jsx-no-undef */}
-                {node.knowledge_type === 'brain_mapping' && <i><FcMindMap style={{ marginRight: 4 }} /></i>}
+                {node.knowledge_type === 'brain_mapping' && (
+                  <i>
+                    <FcMindMap style={{ marginRight: 4 }} />
+                  </i>
+                )}
                 {/* eslint-disable-next-line react/jsx-no-undef */}
-                {node.knowledge_type === 'flow_chart' && <i><ApartmentOutlined style={{ marginRight: 4 }} /></i>}
+                {node.knowledge_type === 'flow_chart' && (
+                  <i>
+                    <ApartmentOutlined style={{ marginRight: 4 }} />
+                  </i>
+                )}
                 {/* eslint-disable-next-line react/jsx-no-undef */}
-                {node.knowledge_type === 'table_of_contents' && <i><FolderOutlined style={{ marginRight: 4 }} /></i>}
-                {node.knowledge_type === 'text' && <i><FileTextOutlined style={{ marginRight: 4 }} /></i>}
+                {node.knowledge_type === 'table_of_contents' && (
+                  <i>
+                    <FolderOutlined style={{ marginRight: 4 }} />
+                  </i>
+                )}
+                {node.knowledge_type === 'text' && (
+                  <i>
+                    <FileTextOutlined style={{ marginRight: 4 }} />
+                  </i>
+                )}
                 {node.title}
               </>
             </a>
             <span>
-            <EditOutlined style={{ marginRight: 8 }} onClick={() => {
-              handleUpdateModalVisible(true);
-              setCurrentRow(node);
-            }} />
-            <PlusOutlined style={{ marginRight: 8 }} onClick={() => {
-              form.resetFields();
-              form.setFieldsValue({ parent_id: node.id });
-              handleModalVisible(true);
-            }} />
-            <DeleteOutlined
-              onClick={() => {
-                Modal.confirm({
-                  title: '确认删除此节点吗？',
-                  content: '删除后该节点及其子节点将无法恢复。',
-                  okText: '确认',
-                  cancelText: '取消',
-                  onOk: () => handleDelete(node.id),
-                });
-              }}
-            />
-          </span>
+              <span style={{ fontSize: 12, color: '#999', marginRight: 16 }}>
+                {dayjs(node.created_at).format('YYYY-MM-DD')} ---- {dayjs(node.updated_at).format('YYYY-MM-DD')}
+              </span>{' '}
+              <EditOutlined
+                style={{ marginRight: 8 }}
+                onClick={() => {
+                  handleUpdateModalVisible(true);
+                  setCurrentRow(node);
+                }}
+              />
+              <PlusOutlined
+                style={{ marginRight: 8 }}
+                onClick={() => {
+                  form.resetFields();
+                  form.setFieldsValue({ parent_id: node.id });
+                  handleModalVisible(true);
+                }}
+              />
+              <DeleteOutlined
+                onClick={() => {
+                  Modal.confirm({
+                    title: '确认删除此节点吗？',
+                    content: '删除后该节点及其子节点将无法恢复。',
+                    okText: '确认',
+                    cancelText: '取消',
+                    onOk: () => handleDelete(node.id),
+                  });
+                }}
+              />
+            </span>
           </div>
         ),
         key: node.id,
@@ -170,7 +203,7 @@ const Knowledge: React.FC = () => {
 
   const fetchTreeData = () => {
     setLoading(true);
-    request('http://127.0.0.1:8081/api/v1/knowledge-tree', {
+    request('/api/v1/knowledge-tree', {
       method: 'GET',
       params: {
         categoryID,
@@ -216,7 +249,7 @@ const Knowledge: React.FC = () => {
     }
 
     try {
-      await request('http://127.0.0.1:8081/api/v1/knowledge/sort', {
+      await request('/api/v1/knowledge/sort', {
         method: 'POST',
         data: {
           moved_id: dragKey,
@@ -234,6 +267,12 @@ const Knowledge: React.FC = () => {
   return (
     <PageContainer header={{ title: categoryTitle || '知识' }}>
       <Flex gap="small" wrap style={{ marginBottom: 16, justifyContent: 'space-between', width: '100%' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <LeftOutlined
+            onClick={() => navigate(-1)}
+            style={{ marginRight: 8, fontSize: 16, cursor: 'pointer' }}
+          />
+        </div>
         <div>
           <Button type="primary" onClick={() => {
             form.resetFields();
@@ -241,11 +280,6 @@ const Knowledge: React.FC = () => {
             handleModalVisible(true);
           }}>
             新增章节
-          </Button>
-        </div>
-        <div>
-          <Button onClick={() => navigate(-1)} style={{ marginRight: 8 }}>
-            返回
           </Button>
         </div>
       </Flex>

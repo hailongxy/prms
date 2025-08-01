@@ -19,7 +19,7 @@ export async function rule(
     /** 列表的内容总数 */
     total?: number;
     success?: boolean;
-  }>('http://127.0.0.1:8081/api/v1/knowledge-categories', {
+  }>('/api/v1/knowledge-categories', {
     method: 'GET',
     params: {
       ...params,
@@ -30,7 +30,7 @@ export async function rule(
 
 /** 新建规则 PUT /api/rule */
 export async function updateRule(data: { [key: string]: any }, options?: { [key: string]: any }) {
-  return request<TableListItem>(`http://127.0.0.1:8081/api/v1/knowledge-categories/${data.id}`, {
+  return request<TableListItem>(`/api/v1/knowledge-categories/${data.id}`, {
     data,
     method: 'PUT',
     ...(options || {}),
@@ -39,7 +39,7 @@ export async function updateRule(data: { [key: string]: any }, options?: { [key:
 
 /** 新建规则 POST /api/rule */
 export async function addRule(data: { [key: string]: any }, options?: { [key: string]: any }) {
-  return request<TableListItem>('http://127.0.0.1:8081/api/v1/knowledge-categories', {
+  return request<TableListItem>('/api/v1/knowledge-categories', {
     data,
     method: 'POST',
     ...(options || {}),
@@ -48,7 +48,7 @@ export async function addRule(data: { [key: string]: any }, options?: { [key: st
 
 /** 删除规则 DELETE /api/rule */
 export async function removeRule(data: { key: number[] }, options?: { [key: string]: any }) {
-  return request<Record<string, any>>('http://127.0.0.1:8081/api/v1/knowledge-categories', {
+  return request<Record<string, any>>('/api/v1/knowledge-categories', {
     data,
     method: 'DELETE',
     ...(options || {}),

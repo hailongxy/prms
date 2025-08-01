@@ -3,6 +3,7 @@ import { useParams, history } from '@umijs/max';
 import { Card, Spin, Button, message } from 'antd';
 import { request } from '@umijs/max';
 import { Editor } from '@tinymce/tinymce-react';
+import { LeftOutlined } from '@ant-design/icons';
 
 interface KnowledgeDetail {
   id: number;
@@ -27,7 +28,7 @@ const Knowledge: React.FC = () => {
     }
 
     setLoading(true);
-    request(`http://127.0.0.1:8081/api/v1/knowledge/${id}`, {
+    request(`/api/v1/knowledge/${id}`, {
       method: 'GET',
     })
       .then((res) => {
@@ -49,7 +50,7 @@ const Knowledge: React.FC = () => {
   const handleSave = async (data?: string) => {
     if (!detail) return;
     try {
-      const res = await request(`http://127.0.0.1:8081/api/v1/knowledge/${detail.id}`, {
+      const res = await request(`/api/v1/knowledge/${detail.id}`, {
         method: 'PUT',
         data: {
           ...detail,
@@ -91,13 +92,14 @@ const Knowledge: React.FC = () => {
 
   return (
     <Card
-      title={detail.title}
-      extra={
-        <Button
-          onClick={() => history.back()}
-        >
-          返回
-        </Button>
+      title={
+        <span>
+          <LeftOutlined
+            onClick={() => history.back()}
+            style={{ marginRight: 8, cursor: 'pointer' }}
+          />
+          {detail.title}
+        </span>
       }
       style={{ width: '100%', margin: '20px auto' }}
     >
