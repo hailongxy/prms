@@ -114,7 +114,7 @@ const Knowledge = () => {
             onClick={() => history.back()}
             style={{ marginRight: 8, cursor: 'pointer' }}
           />
-          {detail.title}
+          {detail ? detail.title : '加载中...'}
         </span>
       }
       style={{ width: '100%', margin: '20px auto' }}
